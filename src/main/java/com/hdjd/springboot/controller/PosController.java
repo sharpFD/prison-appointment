@@ -42,12 +42,12 @@ public class PosController {
 
     @ApiOperation(value = "更新会见地点状态", notes = "更新会见地点状态")
     @ResponseBody
-    @RequestMapping(value = "/editMeetingPosStatus/{id}", method = RequestMethod.GET)
-    public String editMeetingPosStatus(@PathVariable Long id) {
+    @RequestMapping(value = "/editMeetingPosStatus/{id}/{status}", method = RequestMethod.GET)
+    public String editMeetingPosStatus(@PathVariable Long id,@PathVariable int status) {
         ResultMsg resultMsg;
         try {
-            posService.editPosStatus(id,1);
-            resultMsg = ResultUtil.success("获取成功", null);
+            posService.editPosStatus(id,status);
+            resultMsg = ResultUtil.success("更改成功", null);
         } catch (Exception e) {
             e.printStackTrace();
             resultMsg = ResultUtil.systemError();
