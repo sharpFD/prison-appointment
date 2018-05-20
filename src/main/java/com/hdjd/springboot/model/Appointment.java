@@ -11,10 +11,10 @@ public class Appointment {
     private Long id;
     private String name;
     private Long prison_id;
-    private String describtion;
+    private String description;
     private Timestamp meet_time;
     private String meet_record;
-    private String state;
+    private Integer status;
     private Pos pos;
     private Prison prison;
 }

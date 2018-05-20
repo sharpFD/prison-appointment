@@ -4,8 +4,7 @@ package com.hdjd.springboot.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.hdjd.springboot.model.Pos;
-import com.hdjd.springboot.model.Prison;
-import com.hdjd.springboot.service.BaseService;
+import com.hdjd.springboot.service.PosService;
 import com.hdjd.springboot.utils.ResultUtil;
 import com.hdjd.springboot.view.ResultMsg;
 import io.swagger.annotations.ApiOperation;
@@ -19,24 +18,24 @@ import javax.annotation.Resource;
 import java.util.List;
 
 @Controller
-@RequestMapping(value = "/api/admin")
-public class BaseController {
+@RequestMapping(value = "/api/pos")
+public class PosController {
 
-    @Resource(name = "baseService")
-    private BaseService baseService;
+    @Resource(name = "posService")
+    private PosService posService;
 
-    @ApiOperation(value = "根据用户获取会见申请列表", notes = "根据用户获取会见申请列表")
+    @ApiOperation(value = "获取所有空闲会见地点", notes = "获取所有空闲会见地点")
     @ResponseBody
-    @RequestMapping(value = "/getPrisonInfo/{userId}", method = RequestMethod.GET)
-    public String register(@PathVariable Long userId) {
+    @RequestMapping(value = "/getAllMeetingPos", method = RequestMethod.GET)
+    public String getAllMeetingPos() {
         ResultMsg resultMsg;
         try {
-            resultMsg = ResultUtil.success("获取成功", null);
+            List<Pos> posList = posService.getAllMeetingPos(0);
+            resultMsg = ResultUtil.success("获取成功", posList);
         } catch (Exception e) {
             e.printStackTrace();
             resultMsg = ResultUtil.systemError();
         }
-        return JSON.toJSONString(resultMsg, SerializerFeature.WriteMapNullValue);
+        return JSON.toJSONString(resultMsg,SerializerFeature.WriteMapNullValue);
     }
-
 }

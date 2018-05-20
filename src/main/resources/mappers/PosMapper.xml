@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hdjd.springboot.dao.PosMapper">
+    <resultMap id="Pos" type="com.hdjd.springboot.model.Pos">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="pos" property="pos" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <select id="getAllMeetingPos" resultMap="Pos" parameterType="java.lang.Integer">
+    select * from tb_pos where status = #{status,jdbcType=BIGINT}
+  </select>
+
+</mapper>
