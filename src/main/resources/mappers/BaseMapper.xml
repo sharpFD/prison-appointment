@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hdjd.springboot.dao.BaseMapper" >
+
+  <resultMap id="Appointment" type="com.hdjd.springboot.model.Appointment">
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="meet_time" property="meet_time" jdbcType="TIMESTAMP" />
+    <result column="meet_record" property="meet_record" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+    <result column="describtion" property="describtion" jdbcType="VARCHAR" />
+    <association  property="pos" column="meet_pos" javaType="com.hdjd.springboot.model.Pos">
+      <id column="id" property="posId" jdbcType="INTEGER" />
+      <result column="pos" property="pos" jdbcType="VARCHAR" />
+      <result column="status" property="status" jdbcType="INTEGER" />
+    </association>
+    <association  property="prison" column="prison_id" javaType="com.hdjd.springboot.model.Prison">
+      <id column="id" property="prisonId" jdbcType="INTEGER" />
+      <result column="name" property="prisonName" jdbcType="VARCHAR" />
+      <result column="crime_reason" property="crimeReason" jdbcType="VARCHAR" />
+      <result column="crime_time" property="crimeTime" jdbcType="TIMESTAMP" />
+      <result column="crime_room" property="crimeRoom" jdbcType="VARCHAR" />
+      <result column="crime_spend" property="crimeSpend" jdbcType="VARCHAR" />
+    </association>
+  </resultMap>
+  
+  
+  <resultMap id="Pos" type="com.hdjd.springboot.model.Pos">
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="pos" property="pos" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+  </resultMap>
+  <select id="getAllMeetingPos" resultMap="Pos" parameterType="java.lang.Integer">
+    select * from tb_pos where status = #{status,jdbcType=BIGINT}
+  </select>
+
+  <select id="getAllMeetingList" parameterType="map">
+        SELECT
+        AT.id,
+        AT.name,
+        AT.describtion,
+        AT.meet_record,
+        AT.meet_time,
+        pos.id AS posId,
+        pos.pos AS pos,
+        pos.status,
+        pri.name AS prisonName,
+        pri.crime_reason AS crimeReason,
+        pri.crime_time AS crimeTime,
+        pri.crime_room AS crimeRoom,
+        AT.state
+    FROM tb_appointment AT
+    LEFT JOIN tb_prison pri ON pri.id = at.prison_id
+    LEFT JOIN tb_pos pos ON pos.id = at.meet_pos
+  </select>
+</mapper>
