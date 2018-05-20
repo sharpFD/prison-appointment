@@ -19,4 +19,11 @@ public interface PosMapper {
      * @return
      */
     List<Pos> getAllMeetingPos(int status);
+
+    /**
+     * 更新地点状态
+     * @param map id：  status:
+     */
+    void editPosStatus(Map map);
+
 }

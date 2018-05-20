@@ -8,7 +8,9 @@ import com.hdjd.springboot.service.PosService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author: wuyungen
@@ -28,4 +30,14 @@ public class PosServiceImpl implements PosService {
     public List<Pos> getMeetingPosByKeyWord(String keyword) {
         return null;
     }
+
+    @Override
+    public void editPosStatus(Long id, Integer status) {
+        Map map = new HashMap();
+        map.put("id",id);
+        map.put("status",status);
+        posMapper.editPosStatus(map);
+    }
+
+
 }

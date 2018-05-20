@@ -9,6 +9,8 @@
 
     <select id="getAllMeetingPos" resultMap="Pos" parameterType="java.lang.Integer">
     select * from tb_pos where status = #{status,jdbcType=BIGINT}
-  </select>
-
+   </select>
+    <update id="editPosStatus" parameterType="map">
+        UPDATE  tb_pos set status  = #{status} WHERE id = #{id}
+    </update>
 </mapper>
