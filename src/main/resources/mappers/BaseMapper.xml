@@ -2,13 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.hdjd.springboot.dao.BaseMapper" >
 
-  <resultMap id="Appointment" type="com.hdjd.springboot.model.Appointment">
+  <resultMap id="AppointmentResult" type="com.hdjd.springboot.model.Appointment">
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="meet_time" property="meet_time" jdbcType="TIMESTAMP" />
     <result column="meet_record" property="meet_record" jdbcType="VARCHAR" />
     <result column="state" property="state" jdbcType="VARCHAR" />
-    <result column="describtion" property="describtion" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
     <association  property="pos" column="meet_pos" javaType="com.hdjd.springboot.model.Pos">
       <id column="id" property="posId" jdbcType="INTEGER" />
       <result column="pos" property="pos" jdbcType="VARCHAR" />
@@ -22,6 +22,13 @@
       <result column="crime_room" property="crimeRoom" jdbcType="VARCHAR" />
       <result column="crime_spend" property="crimeSpend" jdbcType="VARCHAR" />
     </association>
+      <association  property="user" column="mail" javaType="com.hdjd.springboot.model.User">
+          <id column="id" property="userId" jdbcType="BIGINT"/>
+          <result column="mail" property="mail" jdbcType="VARCHAR"/>
+          <result column="name" property="userName" jdbcType="VARCHAR"/>
+          <result column="idcard" property="idCard" jdbcType="VARCHAR"/>
+          <result column="pwd" property="pwd" jdbcType="VARCHAR"/>
+      </association>
   </resultMap>
   
   
@@ -30,15 +37,14 @@
     <result column="pos" property="pos" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="INTEGER" />
   </resultMap>
-  <select id="getAllMeetingPos" resultMap="Pos" parameterType="java.lang.Integer">
-    select * from tb_pos where status = #{status,jdbcType=BIGINT}
-  </select>
 
-  <select id="getAllMeetingList" parameterType="map">
+  <select id="getUserAppointmentList" parameterType="java.lang.Long" resultMap="AppointmentResult">
         SELECT
         AT.id,
-        AT.name,
-        AT.describtion,
+        AT.mail,
+        user.NAME AS userName,
+        user.id AS userId,
+        AT.description,
         AT.meet_record,
         AT.meet_time,
         pos.id AS posId,
@@ -51,6 +57,8 @@
         AT.state
     FROM tb_appointment AT
     LEFT JOIN tb_prison pri ON pri.id = at.prison_id
-    LEFT JOIN tb_pos pos ON pos.id = at.meet_pos
+    LEFT JOIN tb_pos pos ON pos.pos = at.meet_pos
+    LEFT JOIN tb_user USER ON user.mail=at.mail
+    where userId=#{userId,jdbcType=VARCHAR}
   </select>
 </mapper>

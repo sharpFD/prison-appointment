@@ -9,7 +9,7 @@ import java.sql.Timestamp;
 @Setter
 public class Appointment {
     private Long id;
-    private String name;
+    private String mail;
     private Long prison_id;
     private String description;
     private Timestamp meet_time;
@@ -17,4 +17,5 @@ public class Appointment {
     private Integer status;
     private Pos pos;
     private Prison prison;
+    private User user;
 }

@@ -14,13 +14,36 @@ import java.util.Map;
  */
 @Repository
 public interface BaseMapper {
-    List<Pos> getAllMeetingPos(int status);
-
     /**
-     * 获取会见申请列表
-     * @param map  status:申请状态  userId：查看人Id
+     * 普通用户获取会见申请列表
+     * @param userId
      * @return
      */
-    List<Appointment> getAllMeetingList(Map map);
+    List<Appointment> getUserAppointmentList(Long userId);
 
+    /**
+     * 管理员获取会见申请列表
+     * @return
+     */
+    List<Appointment> getAdminAppointmentList();
+
+    /**
+     * 狱警获取用户申请列表
+     * @return
+     */
+    List<Appointment> getPoliceAppointmentList();
+
+    /**
+     * 修改会见申请信息
+     * @param appointmentId
+     * @return
+     */
+    Appointment updateAppointmentInfo(Long appointmentId);
+
+    /**
+     * 新增会见申请
+     * @param appointment
+     * @return
+     */
+    Appointment addNewAppointment(Appointment appointment);
 }
