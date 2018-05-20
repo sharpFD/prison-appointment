@@ -65,6 +65,9 @@
     <select id="exist" resultType="java.lang.Integer" parameterType="com.hdjd.springboot.model.LoginBean">
         select count(1)
         from
+        <if test="userType=='user'">
+            tb_user
+        </if>
         <if test="userType=='police'">
             tb_police
         </if>

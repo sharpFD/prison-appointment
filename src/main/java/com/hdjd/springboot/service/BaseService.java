@@ -10,5 +10,5 @@ import java.util.List;
  * @Date: 2018/5/20 0:32
  */
 public interface BaseService {
-    List<Pos> getAllMeetingPos(int status);
+    List<Pos> getAllMeetingPosListByUserId(Long UserId);
 }

@@ -25,22 +25,6 @@ public class BaseController {
     @Resource(name = "baseService")
     private BaseService baseService;
 
-    @ApiOperation(value = "获取所有空闲会见地点", notes = "获取所有空闲会见地点")
-    @ResponseBody
-    @RequestMapping(value = "/getAllMeetingPos", method = RequestMethod.GET)
-    public String getAllMeetingPos() {
-        ResultMsg resultMsg;
-        try {
-            List<Pos> posList = baseService.getAllMeetingPos(0);
-            resultMsg = ResultUtil.success("获取成功", posList);
-        } catch (Exception e) {
-            e.printStackTrace();
-            resultMsg = ResultUtil.systemError();
-        }
-        return JSON.toJSONString(resultMsg,SerializerFeature.WriteMapNullValue);
-    }
-
-
     @ApiOperation(value = "根据用户获取会见申请列表", notes = "根据用户获取会见申请列表")
     @ResponseBody
     @RequestMapping(value = "/getPrisonInfo/{userId}", method = RequestMethod.GET)

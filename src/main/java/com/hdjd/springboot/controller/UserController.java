@@ -60,53 +60,59 @@ public class UserController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String login(@RequestBody @ApiParam(name = "用户对象", value = "传入json格式", required = true) LoginBean loginBean) {
         ResultMsg resultMsg;
-        try {
-            int count = userService.exist(loginBean);
-            if (count == 0) {
-                resultMsg = ResultUtil.success("用户不存在", null);
-            } else {
-                Map<String, Object> map = new HashMap<>();
-                switch (loginBean.getUserType()) {
-                    case "police":
-                        Police police = userService.loginPolice(loginBean);
-                        map.put("userType", "police");
-                        map.put("userInfo", police);
-                        if (police == null) {
-                            resultMsg = ResultUtil.success("用户名或密码错误", null);
-                        } else {
+        if (!loginBean.getUserType().equals("user")
+                && !loginBean.getUserType().equals("police")
+                && !loginBean.getUserType().equals("admin")) {
+            resultMsg = ResultUtil.error(304, "用户类型出错", null);
+        } else {
+            try {
+                int count = userService.exist(loginBean);
+                if (count == 0) {
+                    resultMsg = ResultUtil.success("用户不存在", null);
+                } else {
+                    Map<String, Object> map = new HashMap<>();
+                    switch (loginBean.getUserType()) {
+                        case "police":
+                            Police police = userService.loginPolice(loginBean);
                             map.put("userType", "police");
                             map.put("userInfo", police);
-                            resultMsg = ResultUtil.success("登陆成功", map);
-                        }
-                        break;
-                    case "admin":
-                        Admin admin = userService.loginAdmin(loginBean);
-                        map.put("userType", "admin");
-                        map.put("userInfo", admin);
-                        if (admin == null) {
-                            resultMsg = ResultUtil.success("用户名或密码错误", null);
-                        } else {
+                            if (police == null) {
+                                resultMsg = ResultUtil.success("用户名或密码错误", null);
+                            } else {
+                                map.put("userType", "police");
+                                map.put("userInfo", police);
+                                resultMsg = ResultUtil.success("登陆成功", map);
+                            }
+                            break;
+                        case "admin":
+                            Admin admin = userService.loginAdmin(loginBean);
                             map.put("userType", "admin");
                             map.put("userInfo", admin);
-                            resultMsg = ResultUtil.success("登陆成功", map);
-                        }
-                        break;
-                    default:
-                        User user = userService.loginUser(loginBean);
-                        if (user == null) {
-                            resultMsg = ResultUtil.success("用户名或密码错误", null);
-                        } else {
-                            map.put("userType", "user");
-                            map.put("userInfo", user);
-                            resultMsg = ResultUtil.success("登陆成功", map);
-                        }
-                        break;
+                            if (admin == null) {
+                                resultMsg = ResultUtil.success("用户名或密码错误", null);
+                            } else {
+                                map.put("userType", "admin");
+                                map.put("userInfo", admin);
+                                resultMsg = ResultUtil.success("登陆成功", map);
+                            }
+                            break;
+                        default:
+                            User user = userService.loginUser(loginBean);
+                            if (user == null) {
+                                resultMsg = ResultUtil.success("用户名或密码错误", null);
+                            } else {
+                                map.put("userType", "user");
+                                map.put("userInfo", user);
+                                resultMsg = ResultUtil.success("登陆成功", map);
+                            }
+                            break;
+                    }
                 }
-            }
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            resultMsg = ResultUtil.systemError();
+            } catch (Exception e) {
+                e.printStackTrace();
+                resultMsg = ResultUtil.systemError();
+            }
         }
         return JSON.toJSONString(resultMsg, SerializerFeature.WriteMapNullValue);
     }

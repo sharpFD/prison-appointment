@@ -21,7 +21,7 @@ public class BaseServiceImpl implements BaseService {
     private BaseMapper baseMapper;
 
     @Override
-    public List<Pos> getAllMeetingPos(int status) {
-        return baseMapper.getAllMeetingPos(status);
+    public List<Pos> getAllMeetingPosListByUserId(Long UserId) {
+        return null;
     }
 }
