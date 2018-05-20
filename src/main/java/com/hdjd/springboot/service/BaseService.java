@@ -32,15 +32,15 @@ public interface BaseService {
 
     /**
      * 修改会见申请信息
-     * @param appointmentId
+     * @param appointment
      * @return
      */
-    Appointment updateAppointmentInfo(Long appointmentId);
+    Appointment updateAppointmentInfo(Appointment appointment);
 
     /**
      * 新增会见申请
      * @param appointment
      * @return
      */
-    Appointment addNewAppointment(Appointment appointment);
+    int addNewAppointment(Appointment appointment);
 }

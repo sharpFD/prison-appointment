@@ -28,21 +28,21 @@ public class BaseServiceImpl implements BaseService {
 
     @Override
     public List<Appointment> getAdminAppointmentList() {
-        return null;
+        return baseMapper.getAdminAppointmentList();
     }
 
     @Override
     public List<Appointment> getPoliceAppointmentList() {
-        return null;
+        return baseMapper.getPoliceAppointmentList();
     }
 
     @Override
-    public Appointment updateAppointmentInfo(Long appointmentId) {
-        return null;
+    public Appointment updateAppointmentInfo(Appointment appointment) {
+        return baseMapper.updateAppointmentInfo(appointment);
     }
 
     @Override
-    public Appointment addNewAppointment(Appointment appointment) {
-        return null;
+    public int addNewAppointment(Appointment appointment) {
+        return baseMapper.addNewAppointment(appointment);
     }
 }

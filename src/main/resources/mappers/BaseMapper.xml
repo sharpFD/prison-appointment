@@ -1,64 +1,84 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.hdjd.springboot.dao.BaseMapper" >
+<mapper namespace="com.hdjd.springboot.dao.BaseMapper">
 
-  <resultMap id="AppointmentResult" type="com.hdjd.springboot.model.Appointment">
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="meet_time" property="meet_time" jdbcType="TIMESTAMP" />
-    <result column="meet_record" property="meet_record" jdbcType="VARCHAR" />
-    <result column="state" property="state" jdbcType="VARCHAR" />
-    <result column="description" property="description" jdbcType="VARCHAR" />
-    <association  property="pos" column="meet_pos" javaType="com.hdjd.springboot.model.Pos">
-      <id column="id" property="posId" jdbcType="INTEGER" />
-      <result column="pos" property="pos" jdbcType="VARCHAR" />
-      <result column="status" property="status" jdbcType="INTEGER" />
-    </association>
-    <association  property="prison" column="prison_id" javaType="com.hdjd.springboot.model.Prison">
-      <id column="id" property="prisonId" jdbcType="INTEGER" />
-      <result column="name" property="prisonName" jdbcType="VARCHAR" />
-      <result column="crime_reason" property="crimeReason" jdbcType="VARCHAR" />
-      <result column="crime_time" property="crimeTime" jdbcType="TIMESTAMP" />
-      <result column="crime_room" property="crimeRoom" jdbcType="VARCHAR" />
-      <result column="crime_spend" property="crimeSpend" jdbcType="VARCHAR" />
-    </association>
-      <association  property="user" column="mail" javaType="com.hdjd.springboot.model.User">
-          <id column="id" property="userId" jdbcType="BIGINT"/>
-          <result column="mail" property="mail" jdbcType="VARCHAR"/>
-          <result column="name" property="userName" jdbcType="VARCHAR"/>
-          <result column="idcard" property="idCard" jdbcType="VARCHAR"/>
-          <result column="pwd" property="pwd" jdbcType="VARCHAR"/>
-      </association>
-  </resultMap>
-  
-  
-  <resultMap id="Pos" type="com.hdjd.springboot.model.Pos">
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="pos" property="pos" jdbcType="VARCHAR" />
-    <result column="status" property="status" jdbcType="INTEGER" />
-  </resultMap>
+    <resultMap id="AppointmentResult" type="com.hdjd.springboot.model.Appointment">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="userId" property="userId" jdbcType="BIGINT"/>
+        <result column="userName" property="userName" jdbcType="TIMESTAMP"/>
+        <result column="mail" property="mail" jdbcType="VARCHAR"/>
+        <result column="prisonId" property="prisonId" jdbcType="VARCHAR"/>
+        <result column="prisonName" property="prisonName" jdbcType="VARCHAR"/>
+        <result column="posId" property="posId" jdbcType="BIGINT"/>
+        <result column="posName" property="posName" jdbcType="VARCHAR"/>
+        <result column="posStatus" property="posStatus" jdbcType="INTEGER"/>
+        <result column="meetTime" property="meetTime" jdbcType="TIMESTAMP"/>
+        <result column="crimeRoom" property="crimeRoom" jdbcType="VARCHAR"/>
+        <result column="state" property="state" jdbcType="INTEGER"/>
+        <result column="meetRecord" property="meetRecord" jdbcType="VARCHAR"/>
+        <result column="description" property="description" jdbcType="VARCHAR"/>
+        <result column="memo" property="memo" jdbcType="VARCHAR"/>
+    </resultMap>
 
-  <select id="getUserAppointmentList" parameterType="java.lang.Long" resultMap="AppointmentResult">
+    <sql id="getAllInfo">
         SELECT
-        AT.id,
-        AT.mail,
-        user.NAME AS userName,
-        user.id AS userId,
-        AT.description,
-        AT.meet_record,
-        AT.meet_time,
-        pos.id AS posId,
-        pos.pos AS pos,
-        pos.status,
-        pri.name AS prisonName,
-        pri.crime_reason AS crimeReason,
-        pri.crime_time AS crimeTime,
-        pri.crime_room AS crimeRoom,
-        AT.state
-    FROM tb_appointment AT
-    LEFT JOIN tb_prison pri ON pri.id = at.prison_id
-    LEFT JOIN tb_pos pos ON pos.pos = at.meet_pos
-    LEFT JOIN tb_user USER ON user.mail=at.mail
-    where userId=#{userId,jdbcType=VARCHAR}
-  </select>
+            AT.id AS id,
+            user.id as userId,
+            user.name as userName,
+            user.mail as mail,
+            at.prison_id as prisonId,
+            pri.name as prisonName,
+            pos.id as posId,
+            pos.pos as posName,
+            pos.status as posStatus,
+            at.meet_time as meetTime,
+            pri.crime_room as crimeRoom,
+            at.state as state,
+            at.meet_record as meetRecord,
+            at.description as description,
+            at.memo as memo
+        FROM tb_appointment AT
+        LEFT JOIN tb_prison pri ON pri.id = at.prison_id
+        LEFT JOIN tb_pos pos ON pos.pos = at.meet_pos
+        LEFT JOIN tb_user USER ON user.mail=at.mail
+    </sql>
+
+    <select id="getUserAppointmentList" parameterType="java.lang.Long" resultMap="AppointmentResult">
+        <include refid="getAllInfo"></include>
+        where user.id=#{userId,jdbcType=VARCHAR}
+    </select>
+
+    <select id="getAdminAppointmentList" resultMap="AppointmentResult">
+        <include refid="getAllInfo"></include>
+    </select>
+
+    <select id="getPoliceAppointmentList" resultMap="AppointmentResult">
+        <include refid="getAllInfo"></include>
+        where state in (3,4)
+    </select>
+
+    <update id="updateAppointmentInfo" parameterType="com.hdjd.springboot.model.Appointment">
+        update tb_appointment
+        <set>
+            <if test="description != null">
+                description = #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="meetTime != null">
+                meet_time = #{meetTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="meetRecord != null">
+                meet_record = #{meetRecord,jdbcType=VARCHAR},
+            </if>
+            <if test="state != null">
+                state = #{state,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id=#{id,jdbcType=VARCHAR}
+    </update>
+
+    <insert id="addNewAppointment" parameterType="com.hdjd.springboot.model.Appointment">
+        insert into tb_appointment values(0,#{mail,jdbcType=VARCHAR},#{prisonId,jdbcType=INTEGER},#{description,jdbcType=VARCHAR},#{meetTime,jdbcType=VARCHAR},
+        #{posName,jdbcType=VARCHAR},#{meetRecord,jdbcType=VARCHAR},#{state,jdbcType=INTEGER},#{memo,jdbcType=VARCHAR}
+        )
+    </insert>
 </mapper>
