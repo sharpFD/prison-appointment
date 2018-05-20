@@ -1,4 +1,4 @@
-package com.zoe.springboot;
+package com.hdjd.springboot;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

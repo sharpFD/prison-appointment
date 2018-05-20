@@ -1,11 +1,11 @@
-package com.zoe.springboot.utils;
+package com.hdjd.springboot.utils;
 
-import com.zoe.springboot.view.ResultMsg;
+import com.hdjd.springboot.view.ResultMsg;
 import org.springframework.http.HttpStatus;
 
 /**
  * 接口请求返回值工具类
- * Created by zoe on 2017/12/3.
+ *
  */
 public class ResultUtil {
 
@@ -14,10 +14,10 @@ public class ResultUtil {
      * @param object
      * @return
      */
-    public static ResultMsg success(Object object){
+    public static ResultMsg success(String msg,Object object){
         ResultMsg resultMsg = new ResultMsg();
         resultMsg.setCode(HttpStatus.OK.value());
-        resultMsg.setMsg(HttpStatus.OK.getReasonPhrase());
+        resultMsg.setMsg(msg);
         resultMsg.setData(object);
         return resultMsg;
     }

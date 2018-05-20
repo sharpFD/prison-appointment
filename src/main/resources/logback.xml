@@ -12,7 +12,7 @@
     </appender>
 
     <logger name="org.springframework.web" level="DEBUG"/>
-    <logger name="com.zoe.springboot.dao" level="DEBUG"></logger>
+    <logger name="com.hdjd.springboot.dao" level="DEBUG"></logger>
 
     <root level="info">
         <appender-ref ref="console"/>

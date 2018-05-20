@@ -1,10 +1,7 @@
-package com.zoe.springboot.utils;
+package com.hdjd.springboot.utils;
 
 import java.util.UUID;
 
-/**
- * Created by zoe on 2017/12/2.
- */
 public class UuidUtil {
 
     public static String getUuid(){

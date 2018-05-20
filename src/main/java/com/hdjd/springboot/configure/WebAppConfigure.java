@@ -1,12 +1,13 @@
-package com.zoe.springboot.configure;
+package com.hdjd.springboot.configure;
 
-import com.zoe.springboot.interceptor.LoginInterceptor;
+import com.hdjd.springboot.interceptor.LoginInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 /**
- * Created by zoe on 2017/12/6.
+ * @Author: wuyungen
+ * @Date: 2018/5/19 23:31
  */
 @Configuration
 public class WebAppConfigure  extends WebMvcConfigurerAdapter{

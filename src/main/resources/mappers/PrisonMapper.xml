@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hdjd.springboot.dao.PrisonMapper" >
+  <resultMap id="BaseResultMap" type="com.hdjd.springboot.model.Prison" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="crime_reason" property="crimeReason" jdbcType="VARCHAR" />
+    <result column="crime_time" property="crimeTime" jdbcType="TIMESTAMP" />
+    <result column="crime_room" property="crimeRoom" jdbcType="VARCHAR" />
+    <result column="crime_spend" property="crimeSpend" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id,name,crime_reason,crime_time,crime_room,crime_spend
+  </sql>
+
+  <select id="queryPrisonInfoById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_prison
+    where id = #{prisonId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryAllPrisons" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from tb_prison
+  </select>
+
+  <select id="queryPrisonByName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from tb_prison
+    where name like CONCAT('%','${name}','%')
+  </select>
+</mapper>

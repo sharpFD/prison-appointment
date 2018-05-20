@@ -1,8 +1,6 @@
-package com.zoe.springboot.view;
+package com.hdjd.springboot.view;
 
-/**
- * Created by zoe on 2017/12/3.
- */
+
 public class ResultMsg<T> {
 
     /*错误码*/
