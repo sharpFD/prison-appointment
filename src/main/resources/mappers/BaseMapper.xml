@@ -66,6 +66,9 @@
             <if test="meetTime != null">
                 meet_time = #{meetTime,jdbcType=TIMESTAMP},
             </if>
+            <if test="posName != null">
+                meet_pos = #{posName,jdbcType=VARCHAR},
+            </if>
             <if test="meetRecord != null">
                 meet_record = #{meetRecord,jdbcType=VARCHAR},
             </if>

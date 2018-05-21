@@ -37,12 +37,12 @@ public class BaseServiceImpl implements BaseService {
     }
 
     @Override
-    public Appointment updateAppointmentInfo(Appointment appointment) {
-        return baseMapper.updateAppointmentInfo(appointment);
+    public void updateAppointmentInfo(Appointment appointment) {
+        baseMapper.updateAppointmentInfo(appointment);
     }
 
     @Override
-    public int addNewAppointment(Appointment appointment) {
-        return baseMapper.addNewAppointment(appointment);
+    public void addNewAppointment(Appointment appointment) {
+        baseMapper.addNewAppointment(appointment);
     }
 }

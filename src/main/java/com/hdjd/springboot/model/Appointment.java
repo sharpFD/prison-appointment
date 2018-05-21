@@ -18,7 +18,7 @@ public class Appointment {
     private String posStatus;
     private Long posId;
     private String posName;
-    private Date meetTime;
+    private String meetTime;
     private String crimeRoom;
     private Integer state;
     private String meetRecord;

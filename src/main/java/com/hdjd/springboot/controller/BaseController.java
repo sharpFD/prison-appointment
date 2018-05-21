@@ -73,8 +73,8 @@ public class BaseController {
     public String updateAppointmentInfo(@RequestBody @ApiParam(name = "会见申请对象", value = "传入json格式", required = true) Appointment appointment) {
         ResultMsg resultMsg;
         try {
-            Appointment updateAppointment = baseService.updateAppointmentInfo(appointment);
-            resultMsg = ResultUtil.success("获取成功", updateAppointment);
+            baseService.updateAppointmentInfo(appointment);
+            resultMsg = ResultUtil.success("更改成功", null);
         } catch (Exception e) {
             e.printStackTrace();
             resultMsg = ResultUtil.systemError();

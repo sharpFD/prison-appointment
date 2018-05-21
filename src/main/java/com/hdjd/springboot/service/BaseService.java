@@ -35,12 +35,12 @@ public interface BaseService {
      * @param appointment
      * @return
      */
-    Appointment updateAppointmentInfo(Appointment appointment);
+    void updateAppointmentInfo(Appointment appointment);
 
     /**
      * 新增会见申请
      * @param appointment
      * @return
      */
-    int addNewAppointment(Appointment appointment);
+    void addNewAppointment(Appointment appointment);
 }
