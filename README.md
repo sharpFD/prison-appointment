@@ -10,6 +10,3 @@ http://localhost:8888/swagger-ui.html
 
 # 请求接口示例
 http://localhost:8888/api/prison/getAllPrisonInfo
-
-# 数据库建表
-TODO
